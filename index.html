@@ -6,16 +6,16 @@
 <title>Психологические тесты</title>
 <style>
 body{margin:0;font-family:Inter,Arial,sans-serif;background:#f3f5fb;color:#111}
-.container{max-width:800px;margin:auto;padding:16px}
-h1{margin:0 0 16px;font-size:24px;font-weight:700;text-align:center}
+.container{max-width:860px;margin:auto;padding:16px}
+h1{margin:0 0 16px;font-size:26px;font-weight:700;text-align:center}
 .tests{display:grid;gap:12px;margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 .card{background:white;padding:16px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.07);cursor:pointer;transition:.15s;text-align:center}
 .card:hover{transform:translateY(-2px)}
 .hidden{display:none}
 
 .question{background:white;padding:14px;border-radius:10px;margin:14px 0;box-shadow:0 2px 12px rgba(0,0,0,0.05)}
-.options{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.opt{flex:1 1 30%;text-align:center;padding:14px 10px;border:1px solid #dce3f2;border-radius:8px;cursor:pointer;font-weight:600;font-size:16px}
+.options{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.opt{flex:1 1 30%;text-align:center;padding:14px 10px;border:1px solid #dce3f2;border-radius:8px;cursor:pointer;font-weight:700;font-size:16px}
 .opt.y{background:#eaf3ff;border-color:#2a6df7;color:#2a6df7}
 .opt.n{background:#fff0f0;border-color:#d34545;color:#d34545}
 .opt.s{background:#fff9e5;border-color:#f0ad4e;color:#f0ad4e}
@@ -26,12 +26,13 @@ button{padding:12px 16px;border:none;border-radius:10px;cursor:pointer;font-size
 .back-btn{background:#e8edfc;color:#2a6df7;flex:1}
 .next-btn{background:#2a6df7;color:white;flex:1}
 .result-box{background:#f7fff6;border:1px solid #d7efdb;padding:16px;border-radius:10px;margin-top:18px;font-size:18px}
-#toMenu{margin-top:12px;padding:10px 16px;border:none;border-radius:8px;background:#2a6df7;color:white;cursor:pointer;font-size:16px;}
+#toMenu{margin-top:12px;padding:10px 16px;border:none;border-radius:8px;background:#2a6df7;color:white;cursor:pointer;font-size:16px}
 
 @media(max-width:480px){
   h1{font-size:20px}
-  .opt{font-size:14px;padding:12px;flex:1 1 100%;}
+  .opt{font-size:15px;padding:12px;flex:1 1 100%;}
   .nav button{font-size:14px;padding:10px}
+  .container{padding:12px}
 }
 </style>
 </head>
@@ -54,7 +55,7 @@ button{padding:12px 16px;border:none;border-radius:10px;cursor:pointer;font-size
 
 <div id="quizWrap" class="hidden">
   <h1 id="testTitle"></h1>
-  <div id="quiz" style="max-height:65vh;overflow-y:auto;"></div>
+  <div id="quiz" style="max-height:68vh;overflow-y:auto;"></div>
 
   <div class="nav">
     <button id="back" class="back-btn">Назад</button>
@@ -66,10 +67,12 @@ button{padding:12px 16px;border:none;border-radius:10px;cursor:pointer;font-size
 
 <script>
 // ----------------------------
-// ВОПРОСЫ ПО ТЕМАМ
+// ТЕСТЫ — вопросы по темам (обновлённые)
 // ----------------------------
 const TESTS = {
-  krit: { title:"Критическое мышление", questions:[
+  krit: {
+    title: "Критическое мышление",
+    questions: [
       "Вы принимаете мнение человека только если оно совпадает с мнением авторитета?",
       "Вы размышляете, прежде чем принять или отвергнуть чьи-то слова?",
       "Вы чувствуете неприязнь, когда ваши убеждения сталкиваются с чужими?",
@@ -78,10 +81,14 @@ const TESTS = {
       "Вы считаете, что правда у каждого своя и её нельзя найти?",
       "Вы доверяете слухам и мнением большинства вместо самостоятельного изучения темы или человека?",
       "Вы судите всех по себе?",
-      "Вы склонны обобщать два разных понятия?"
+      "Вы склонны обобщать два разных понятия?",
+      "Вам тяжело вникнуть в вещи, которые новые для вас?"
     ]
   },
-  selfesteem:{ title:"Низкая самооценка", questions:[
+
+  selfesteem: {
+    title: "Низкая самооценка",
+    questions: [
       "Вы выискиваете недостатки у других потому что не прощаете свои?",
       "Вам охота стать лучше кого-то?",
       "Вам охота всем что-то доказать?",
@@ -100,7 +107,10 @@ const TESTS = {
       "Вас задевает критика?"
     ]
   },
-  manip:{ title:"Собеседник-манипулятор", questions:[
+
+  manip: {
+    title: "Собеседник-манипулятор",
+    questions: [
       "Отрицает свою вину, но при этом у вас есть аргументы про него или нее?",
       "Его или её красивые слова не сходятся с действиями?",
       "Он или она вас провоцирует на негативные эмоции?",
@@ -112,7 +122,10 @@ const TESTS = {
       "Он или она пытается вызвать чувство вины у Вас?"
     ]
   },
-  stress:{ title:"Хронический стресс", questions:[
+
+  stress: {
+    title: "Хронический стресс",
+    questions: [
       "У вас появляется раздражение на самого себя, но при этом умом понимаете, что ошибаться это нормально, если учиться на ошибках?",
       "Вы чувствуете тревогу, когда сталкиваетесь с людьми или их критикой, но при этом знаете, что не все идеальные и всем не угодить?",
       "Вы чувствуете опасность даже там, где её нет?",
@@ -124,7 +137,10 @@ const TESTS = {
       "У Вас есть хроническая усталость / Вы весь день измотаны даже после долгого сна?"
     ]
   },
-  introvert:{ title:"Признаки интроверта (шизоида, флегматика, меланхолика)", questions:[
+
+  introvert: {
+    title: "Признаки интроверта (шизоида, флегматика, меланхолика)",
+    questions: [
       "У Вас или у него/неё небольшой круг друзей?",
       "Вы или он/она чувствуете усталость даже после приятного общения?",
       "Вы или он/она не любите разговоры ради разговоров?",
@@ -137,7 +153,10 @@ const TESTS = {
       "Вы или он/она прямолинейны и не терпите ложь независимо от её цели?"
     ]
   },
-  extrovert:{ title:"Признаки экстраверта (истероида, сангвиника, холерика)", questions:[
+
+  extrovert: {
+    title: "Признаки экстраверта (истероида, сангвиника, холерика)",
+    questions: [
       "Вам или ему/ей не нравится одиночество?",
       "Вам или ему/ей нравится общаться просто так, даже если стесняетесь кого-то?",
       "Вам или ему/ей не нравятся паузы в общении?",
@@ -146,13 +165,19 @@ const TESTS = {
       "Вы или он/она озвучиваете мысли вслух?"
     ]
   },
-  ambivert:{ title:"Признаки амбиверта", questions:[
-      "Вам или ему/ей тяжело определиться с ролью интроверта или экстроверта?",
-      "Вы или он/она можете быть в хорошей компании и одни?",
-      "Вы или он/она можете много болтать, но делать паузы в разговорах?"
+
+  ambivert: {
+    title: "Признаки амбиверта",
+    questions: [
+      "Вы или он(а) не считаете себя экстравертом или интровертом?",
+      "Вы или он(а) можете быть в хорошей компании и одни?",
+      "Вы или он(а) можете много болтать, но делать паузы в разговорах?"
     ]
   },
-  infantile:{ title:"Признаки Инфантильности/Незрелости", questions:[
+
+  infantile: {
+    title: "Признаки Инфантильности/Незрелости",
+    questions: [
       "Вы или он/она постоянно жалуетесь на жизнь, но ничего не делаете с этим?",
       "Вы или он/она не благодарны за помощь или поддержку?",
       "Вы или он/она склонны обвинять кого-то вместо того чтобы признать свои ошибки и не меняетесь?",
@@ -168,10 +193,14 @@ const TESTS = {
 // ----------------------------
 let currentTest=null, qi=0, answers=[];
 
-document.querySelectorAll(".card").forEach(card=>{card.onclick=()=>startTest(card.dataset.test)});
+document.querySelectorAll(".card").forEach(card=>{
+  card.onclick=()=>startTest(card.dataset.test);
+});
 
 function startTest(id){
-  currentTest=TESTS[id]; qi=0; answers=new Array(currentTest.questions.length).fill(null);
+  currentTest=TESTS[id];
+  qi=0;
+  answers=new Array(currentTest.questions.length).fill(null);
   document.getElementById("menu").classList.add("hidden");
   document.getElementById("quizWrap").classList.remove("hidden");
   document.getElementById("testTitle").textContent=currentTest.title;
@@ -179,27 +208,72 @@ function startTest(id){
 }
 
 function renderQuestion(){
-  const quiz=document.getElementById("quiz"); quiz.innerHTML="";
+  const quiz=document.getElementById("quiz");
+  quiz.innerHTML="";
   const qText=currentTest.questions[qi];
-  if(!qText){ quiz.innerHTML="<p style='color:#777'>В этой теме пока нет вопросов.</p>"; document.getElementById("next").style.display="none"; return; }
-  const q=document.createElement("div"); q.className="question"; q.innerHTML=`<div style="font-weight:600">${qText}</div>`;
-  const opts=document.createElement("div"); opts.className="options";
-  const yesBtn=document.createElement("div"); yesBtn.className="opt y"; yesBtn.textContent="ДА"; yesBtn.onclick=()=>{answers[qi]=1; renderQuestion();}; if(answers[qi]===1) yesBtn.classList.add("selected");
-  const sometimesBtn=document.createElement("div"); sometimesBtn.className="opt s"; sometimesBtn.textContent="ИНOГДА"; sometimesBtn.onclick=()=>{answers[qi]=0.5; renderQuestion();}; if(answers[qi]===0.5) sometimesBtn.classList.add("selected");
-  const noBtn=document.createElement("div"); noBtn.className="opt n"; noBtn.textContent="НЕТ"; noBtn.onclick=()=>{answers[qi]=0; renderQuestion();}; if(answers[qi]===0) noBtn.classList.add("selected");
-  opts.appendChild(yesBtn); opts.appendChild(sometimesBtn); opts.appendChild(noBtn); q.appendChild(opts); quiz.appendChild(q);
-  document.getElementById("next").textContent=qi===currentTest.questions.length-1?"Завершить":"Дальше";
+  if(!qText){
+    quiz.innerHTML="<p style='color:#777'>В этой теме пока нет вопросов.</p>";
+    document.getElementById("next").style.display="none";
+    return;
+  }
+
+  const q=document.createElement("div");
+  q.className="question";
+  q.innerHTML=`<div style="font-weight:700">${qText}</div>`;
+
+  const opts=document.createElement("div");
+  opts.className="options";
+
+  const yesBtn=document.createElement("div");
+  yesBtn.className="opt y";
+  yesBtn.textContent="ДА";
+  yesBtn.onclick=()=>{ answers[qi]=1; renderQuestion(); };
+  if(answers[qi]===1) yesBtn.classList.add("selected");
+
+  const sometimesBtn=document.createElement("div");
+  sometimesBtn.className="opt s";
+  sometimesBtn.textContent="ИНOГДА";
+  sometimesBtn.onclick=()=>{ answers[qi]=0.5; renderQuestion(); };
+  if(answers[qi]===0.5) sometimesBtn.classList.add("selected");
+
+  const noBtn=document.createElement("div");
+  noBtn.className="opt n";
+  noBtn.textContent="НЕТ";
+  noBtn.onclick=()=>{ answers[qi]=0; renderQuestion(); };
+  if(answers[qi]===0) noBtn.classList.add("selected");
+
+  opts.appendChild(yesBtn);
+  opts.appendChild(sometimesBtn);
+  opts.appendChild(noBtn);
+
+  q.appendChild(opts);
+  quiz.appendChild(q);
+
+  document.getElementById("next").textContent = qi===currentTest.questions.length-1 ? "Завершить" : "Дальше";
 }
 
 document.getElementById("back").onclick=()=>{
-  if(qi===0){ document.getElementById("quizWrap").classList.add("hidden"); document.getElementById("menu").classList.remove("hidden"); document.getElementById("result").classList.add("hidden"); document.querySelector(".nav").classList.remove("hidden"); return; }
-  qi--; renderQuestion();
+  if(qi===0){
+    document.getElementById("quizWrap").classList.add("hidden");
+    document.getElementById("menu").classList.remove("hidden");
+    document.getElementById("result").classList.add("hidden");
+    document.querySelector(".nav").classList.remove("hidden");
+    return;
+  }
+  qi--;
+  renderQuestion();
 };
 
-document.getElementById("next").onclick=()=>{ if(qi<currentTest.questions.length-1){ qi++; renderQuestion(); }else showResult(); }
+document.getElementById("next").onclick=()=>{
+  if(qi<currentTest.questions.length-1){ qi++; renderQuestion(); } else { showResult(); }
+};
 
 function showResult(){
-  const allYes=answers.every(v=>v===1); let message=""; const sum=answers.reduce((acc,v)=>acc+(v||0),0); const score=Math.max(0,10-sum);
+  const allYes = answers.every(v=>v===1);
+  let message = "";
+  const sum = answers.reduce((acc,v)=>acc+(v||0),0);
+  const score = Math.max(0,10 - sum);
+
   if(allYes){
     switch(currentTest.title){
       case "Критическое мышление": message="Критическое мышление страдает (все ответы ДА)"; break;
@@ -209,23 +283,49 @@ function showResult(){
       case "Признаки интроверта (шизоида, флегматика, меланхолика)": message="Интроверсия зашкаливает (все ответы ДА)"; break;
       case "Признаки экстраверта (истероида, сангвиника, холерика)": message="Экстраверсия зашкаливает (все ответы ДА)"; break;
       case "Признаки амбиверта": message="Амбивертность выражена максимально (все ответы ДА)"; break;
-      case "Признаки Инфантильности/Незрелости": message="Ваш знакомый/друг/партнер явно инфантилен (все ответы ДА)"; break;
+      case "Признаки Инфантильности/Незрелости": message="Явные признаки инфантильности/незрелости (все ответы ДА)"; break;
       default: message="Все ответы ДА";
     }
   } else {
     switch(currentTest.title){
-      case "Критическое мышление": if(score<=3) message="Отличное критическое мышление"; else if(score<=6) message="Средний уровень критического мышления"; else message="Критическое мышление страдает"; break;
-      case "Хронический стресс": if(score<=3) message="У вас низкий уровень стресса"; else if(score<=6) message="Средний уровень стресса"; else message="У вас высокий уровень стресса"; break;
-      case "Низкая самооценка": if(score<=3) message="У вас здоровая самооценка"; else if(score<=6) message="Уровень самооценки средний"; else message="У вас низкая самооценка"; break;
-      default: message="";
+      case "Критическое мышление":
+        if(score<=3) message="Отличное критическое мышление";
+        else if(score<=6) message="Средний уровень критического мышления";
+        else message="Критическое мышление страдает";
+        break;
+      case "Хронический стресс":
+        if(score<=3) message="У вас низкий уровень стресса";
+        else if(score<=6) message="Средний уровень стресса";
+        else message="У вас высокий уровень стресса";
+        break;
+      case "Низкая самооценка":
+        if(score<=3) message="У вас здоровая самооценка";
+        else if(score<=6) message="Уровень самооценки средний";
+        else message="У вас низкая самооценка";
+        break;
+      default:
+        message="";
     }
   }
-  const res=document.getElementById("result"); res.classList.remove("hidden"); res.className="result-box";
+
+  const res=document.getElementById("result");
+  res.classList.remove("hidden");
+  res.className="result-box";
   res.innerHTML=`<b>${currentTest.title}</b><br>Уровень: ${score.toFixed(1)}/10<br>${message}<br><button id="toMenu">Вернуться в меню</button>`;
-  document.getElementById("quiz").innerHTML=""; document.querySelector(".nav").classList.add("hidden");
-  document.getElementById("toMenu").onclick=()=>{ document.getElementById("quizWrap").classList.add("hidden"); document.getElementById("menu").classList.remove("hidden"); document.getElementById("result").classList.add("hidden"); document.querySelector(".nav").classList.remove("hidden"); answers=[]; qi=0; };
+
+  document.getElementById("quiz").innerHTML="";
+  document.querySelector(".nav").classList.add("hidden");
+
+  document.getElementById("toMenu").onclick=()=>{
+    document.getElementById("quizWrap").classList.add("hidden");
+    document.getElementById("menu").classList.remove("hidden");
+    document.getElementById("result").classList.add("hidden");
+    document.querySelector(".nav").classList.remove("hidden");
+    answers=[]; qi=0;
+  };
 }
 </script>
 
+</div>
 </body>
 </html>
